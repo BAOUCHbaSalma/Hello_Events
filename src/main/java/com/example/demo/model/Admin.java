@@ -1,7 +1,10 @@
 package com.example.demo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Setter
 @Getter
@@ -19,6 +22,9 @@ public class Admin {
     private String email;
     @Column
     private String password;
+//    @OneToMany(mappedBy = "admin")
+//    @JsonIgnore
+//    private List<Contact> contactList;
 
 
 }
