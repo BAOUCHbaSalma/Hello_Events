@@ -3,9 +3,11 @@ package com.example.demo.controller;
 import com.example.demo.config.JwtHelper;
 import com.example.demo.dto.Login;
 import com.example.demo.dto.SignupRequest;
+import com.example.demo.model.Contact;
 import com.example.demo.model.Evenement;
 import com.example.demo.model.Reservation;
 import com.example.demo.model.User;
+import com.example.demo.service.ContactService;
 import com.example.demo.service.EvenementService;
 import com.example.demo.service.ReservationService;
 import com.example.demo.service.UserService;
@@ -29,6 +31,8 @@ public class HelloEventController {
     private EvenementService evenementService;
     @Autowired
     private ReservationService reservationService;
+    @Autowired
+    private ContactService contactService;
 
 
 
@@ -90,5 +94,10 @@ public class HelloEventController {
     @DeleteMapping("/user/{idUser}")
     public void deleteUser(@PathVariable Integer idUser){
         userService.deleteUser(idUser);
+    }
+
+    @GetMapping("/contact")
+    public List<Contact> showAllContact(){
+        return contactService.showAllContact();
     }
 }
