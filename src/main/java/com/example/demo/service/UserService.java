@@ -55,4 +55,7 @@ public class UserService {
     public List<User> findAllRegistre(){
        return userRepository.findAll();
     }
+    public void deleteUser(Integer idUser){
+        userRepository.deleteById(idUser);
+    }
 }

@@ -87,4 +87,8 @@ public class HelloEventController {
     public List<User> showRegisters(){
         return userService.findAllRegistre();
     }
+    @DeleteMapping("/user/{idUser}")
+    public void deleteUser(@PathVariable Integer idUser){
+        userService.deleteUser(idUser);
+    }
 }
