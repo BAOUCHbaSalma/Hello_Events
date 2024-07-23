@@ -28,8 +28,16 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private String password;
-    
 
+    @Override
+    public String getPassword() {
+        return this.password;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.username;
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
