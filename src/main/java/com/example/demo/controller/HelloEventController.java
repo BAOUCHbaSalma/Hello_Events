@@ -59,10 +59,14 @@ public class HelloEventController {
     }
     @GetMapping("/evenements")
     public List<Evenement> showEvenements(){
-        return evenementService.showEvent();
+        return evenementService.showEvents();
     }
     @DeleteMapping("/evenement/{id}")
     public void deleteEvent(@PathVariable Integer id){
         evenementService.deleteEvent(id);
+    }
+    @GetMapping("/evenement/{idEvent}")
+    public Evenement showEvenement(@PathVariable Integer idEvent){
+        return evenementService.showEvent(idEvent);
     }
 }
