@@ -30,6 +30,8 @@ public class Evenement {
     @Column
     private LocalDate dateEvenement;
     @Column
+    private Double prix;
+    @Column
     private LocalTime heursEvenement;
     @Column
     private String image;

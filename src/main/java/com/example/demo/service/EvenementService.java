@@ -25,4 +25,16 @@ public class EvenementService {
     public Evenement showEvent(Integer idEvent){
        return evenementRepository.findById(idEvent).orElseThrow();
     }
+
+    public Evenement updateEvent(Integer idEvenement,Evenement evenement){
+        Evenement evenement1=showEvent(idEvenement);
+        evenement1.setLieu(evenement.getLieu());
+        evenement1.setImage(evenement.getImage());
+        evenement1.setDescription(evenement.getDescription());
+        evenement1.setDateEvenement(evenement.getDateEvenement());
+        evenement1.setHeursEvenement(evenement.getHeursEvenement());
+        evenement1.setTitre(evenement.getTitre());
+        evenement1.setPrix(evenement.getPrix());
+       return evenementRepository.save(evenement1);
+    }
 }

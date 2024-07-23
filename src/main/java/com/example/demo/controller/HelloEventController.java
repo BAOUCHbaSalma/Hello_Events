@@ -4,7 +4,9 @@ import com.example.demo.config.JwtHelper;
 import com.example.demo.dto.Login;
 import com.example.demo.dto.SignupRequest;
 import com.example.demo.model.Evenement;
+import com.example.demo.model.Reservation;
 import com.example.demo.service.EvenementService;
+import com.example.demo.service.ReservationService;
 import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ public class HelloEventController {
     private AuthenticationManager authenticationManager;
     @Autowired
     private EvenementService evenementService;
+    @Autowired
+    private ReservationService reservationService;
 
 
 
@@ -68,5 +72,14 @@ public class HelloEventController {
     @GetMapping("/evenement/{idEvent}")
     public Evenement showEvenement(@PathVariable Integer idEvent){
         return evenementService.showEvent(idEvent);
+    }
+    @PutMapping("/evenement/update/{idEvenement}")
+    public Evenement updateEvenement(@PathVariable Integer idEvenement,@RequestBody Evenement evenement){
+        return evenementService.updateEvent(idEvenement,evenement);
+
+    }
+    @GetMapping("/reservation")
+    public List<Reservation> showReservations(){
+        return reservationService.showReservations();
     }
 }
