@@ -1,9 +1,6 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,11 +13,13 @@ import lombok.Setter;
 @Entity
 public class Contact {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idContact;
     @Column
     private String sujet;
     @Column
     private String message;
     @ManyToOne
+    @JoinColumn(name = "userId")
     private User user;
 }

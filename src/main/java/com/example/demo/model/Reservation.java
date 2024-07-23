@@ -1,9 +1,6 @@
 package com.example.demo.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,14 +16,17 @@ import java.time.LocalTime;
 @Entity
 public class Reservation {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idReservetion;
     @Column
     private LocalDate dateReservation;
     @Column
     private LocalTime HeursReservation;
     @ManyToOne
+    @JoinColumn(name = "idEvenement")
     private Evenement evenement;
     @ManyToOne
+    @JoinColumn(name = "userId")
     private User user;
 
 }

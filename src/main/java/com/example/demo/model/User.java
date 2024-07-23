@@ -28,10 +28,10 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private String password;
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Reservation> reservationList ;
-    @OneToMany
+    @OneToMany(mappedBy = "user")
     @JsonIgnore
     private  List<Contact> contactList;
 
