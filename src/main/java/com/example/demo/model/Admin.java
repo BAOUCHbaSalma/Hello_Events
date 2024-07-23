@@ -20,6 +20,6 @@ public class Admin {
     private String email;
     @Column
     private String password;
-    
+
 
 }
