@@ -16,10 +16,13 @@ public class EvenementService {
         return evenementRepository.save(evenement);
     }
 
-    public List<Evenement> showEvent(){
+    public List<Evenement> showEvents(){
         return evenementRepository.findAll();
     }
     public void deleteEvent(Integer idEvent){
         evenementRepository.deleteById(idEvent);
+    }
+    public Evenement showEvent(Integer idEvent){
+       return evenementRepository.findById(idEvent).orElseThrow();
     }
 }
