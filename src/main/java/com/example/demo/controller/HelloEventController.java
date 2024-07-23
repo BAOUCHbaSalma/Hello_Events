@@ -3,32 +3,33 @@ package com.example.demo.controller;
 import com.example.demo.config.JwtHelper;
 import com.example.demo.dto.Login;
 import com.example.demo.dto.SignupRequest;
+import com.example.demo.model.Evenement;
+import com.example.demo.service.EvenementService;
 import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/api/auth", produces = MediaType.APPLICATION_JSON_VALUE)
-public class AuthController {
+public class HelloEventController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private EvenementService evenementService;
 
 
 
     private final UserService userService;
 
-    public AuthController(UserService userService) {
+    public HelloEventController(UserService userService) {
         this.userService = userService;
     }
 
@@ -51,5 +52,9 @@ public class AuthController {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid login credentials");
         }
+    }
+    @PostMapping("/evenement")
+    public Evenement addEvenement(@RequestBody Evenement evenement){
+        return evenementService.addEvenement(evenement);
     }
 }
