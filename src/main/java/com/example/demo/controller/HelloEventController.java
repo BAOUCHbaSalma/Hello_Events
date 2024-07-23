@@ -96,8 +96,13 @@ public class HelloEventController {
         userService.deleteUser(idUser);
     }
 
-    @GetMapping("/contact")
-    public List<Contact> showAllContact(){
-        return contactService.showAllContact();
+    @GetMapping("/contacts")
+    public List<Contact> showAllMessages(){
+        return contactService.showAllMessages();
+    }
+
+    @PostMapping("/contact")
+    public Contact sendMessage(@RequestBody Contact contact){
+        return contactService.sendMessage(contact);
     }
 }

@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.SignupRequest;
+import com.example.demo.model.Contact;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -58,4 +59,5 @@ public class UserService {
     public void deleteUser(Integer idUser){
         userRepository.deleteById(idUser);
     }
+
 }

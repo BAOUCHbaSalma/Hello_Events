@@ -13,7 +13,10 @@ public class ContactService {
     @Autowired
     private ContactRepository contactRepository;
 
-    public List<Contact> showAllContact(){
+    public List<Contact> showAllMessages(){
         return contactRepository.findAll();
+    }
+    public Contact sendMessage(Contact contact){
+        return contactRepository.save(contact);
     }
 }

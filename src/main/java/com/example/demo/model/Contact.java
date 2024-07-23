@@ -22,4 +22,7 @@ public class Contact {
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
+//    @ManyToOne
+//    @JoinColumn(name = "idAdmin")
+//    private Admin admin;
 }
