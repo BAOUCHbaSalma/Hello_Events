@@ -28,6 +28,8 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private String password;
+    @OneToMany
+    private List<Evenement> evenementList;
 
     @Override
     public String getPassword() {
