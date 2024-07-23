@@ -29,7 +29,11 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
     @OneToMany
-    private List<Evenement> evenementList;
+    @JsonIgnore
+    private List<Reservation> reservationList ;
+    @OneToMany
+    @JsonIgnore
+    private  List<Contact> contactList;
 
     @Override
     public String getPassword() {
