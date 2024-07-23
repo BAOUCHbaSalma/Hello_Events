@@ -5,6 +5,7 @@ import com.example.demo.dto.Login;
 import com.example.demo.dto.SignupRequest;
 import com.example.demo.model.Evenement;
 import com.example.demo.model.Reservation;
+import com.example.demo.model.User;
 import com.example.demo.service.EvenementService;
 import com.example.demo.service.ReservationService;
 import com.example.demo.service.UserService;
@@ -81,5 +82,9 @@ public class HelloEventController {
     @GetMapping("/reservation")
     public List<Reservation> showReservations(){
         return reservationService.showReservations();
+    }
+    @GetMapping("/registres")
+    public List<User> showRegisters(){
+        return userService.findAllRegistre();
     }
 }
