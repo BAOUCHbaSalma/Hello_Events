@@ -128,4 +128,9 @@ public class HelloEventController {
     public List<Reservation> showReservationsByIdUser(@PathVariable Integer id){
         return reservationService.showReservationsByIdUser(id);
     }
+    @GetMapping("/titre")
+    public List<Evenement> findEventByTitre(String titre){
+        return evenementService.findEventByTitre(titre);
+    }
+
 }
