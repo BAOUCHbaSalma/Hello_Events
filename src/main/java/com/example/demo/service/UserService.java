@@ -7,6 +7,7 @@ import com.example.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +43,10 @@ public class UserService {
         return user.get();
     }
 
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+
     @Transactional
     public void signUp(SignupRequest signupRequest) {
         String hashedPassword = passwordEncoder.encode(signupRequest.password());
@@ -53,11 +58,24 @@ public class UserService {
         userRepository.save(user);
     }
 
+
+    public User updateProfile(Integer userId, User user) {
+        User existingUser = findUserById(userId);
+        existingUser.setEmail(user.getEmail());
+        existingUser.setAge(user.getAge());
+        return userRepository.save(existingUser);
+    }
+
+    public User findUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
     public List<User> findAllRegistre(){
        return userRepository.findAll();
     }
     public void deleteUser(Integer idUser){
         userRepository.deleteById(idUser);
     }
+
 
 }

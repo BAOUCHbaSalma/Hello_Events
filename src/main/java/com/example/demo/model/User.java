@@ -28,6 +28,7 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private String password;
+
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Reservation> reservationList ;
@@ -35,6 +36,8 @@ public class User implements UserDetails {
     @JsonIgnore
     private  List<Contact> contactList;
 
+
+    private String age;
     @Override
     public String getPassword() {
         return this.password;

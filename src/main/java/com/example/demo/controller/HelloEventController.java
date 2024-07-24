@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -104,5 +105,23 @@ public class HelloEventController {
     @PostMapping("/contact")
     public Contact sendMessage(@RequestBody Contact contact){
         return contactService.sendMessage(contact);
+    }
+    @GetMapping("/profile/{id}")
+    public ResponseEntity<User> getUserProfile(@PathVariable Integer id) {
+        User user = userService.findUserById(id);
+        return ResponseEntity.ok(user);
+    }
+
+    @PutMapping("/profile/{id}")
+    public ResponseEntity<User> updateUserProfile(@PathVariable Integer id, @Valid @RequestBody User user) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUsername = authentication.getName();
+        User currentUser = userService.findUserByUsername(currentUsername);
+
+        if (!currentUser.getUserId().equals(id)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+        User updatedUser = userService.updateProfile(id, user);
+        return ResponseEntity.ok(updatedUser);
     }
 }
