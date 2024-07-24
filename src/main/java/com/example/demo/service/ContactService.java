@@ -19,4 +19,7 @@ public class ContactService {
     public Contact sendMessage(Contact contact){
         return contactRepository.save(contact);
     }
+    public List<Contact> showMessageUser(Integer idUser){
+        return contactRepository.findByUser_UserId(idUser);
+    }
 }
