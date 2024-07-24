@@ -18,4 +18,7 @@ public class ReservationService {
     public Reservation addReservation(Reservation reservation){
         return reservationRepository.save(reservation);
     }
+    public List<Reservation> showReservationsByIdUser(Integer idUser){
+        return reservationRepository.findByUser_UserId(idUser);
+    }
 }

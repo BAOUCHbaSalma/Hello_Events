@@ -124,4 +124,8 @@ public class HelloEventController {
     public Reservation addReservation(@RequestBody Reservation reservation){
         return reservationService.addReservation(reservation);
     }
+    @GetMapping ("/reservations/{id}")
+    public List<Reservation> showReservationsByIdUser(@PathVariable Integer id){
+        return reservationService.showReservationsByIdUser(id);
+    }
 }
