@@ -113,15 +113,11 @@ public class HelloEventController {
     }
 
     @PutMapping("/profile/{id}")
-    public ResponseEntity<User> updateUserProfile(@PathVariable Integer id, @Valid @RequestBody User user) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentUsername = authentication.getName();
-        User currentUser = userService.findUserByUsername(currentUsername);
-
-        if (!currentUser.getUserId().equals(id)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-        User updatedUser = userService.updateProfile(id, user);
-        return ResponseEntity.ok(updatedUser);
+    public User updateUserProfile(@PathVariable Integer id, @Valid @RequestBody User user) {
+        return userService.updateProfile(id,user);
+    }
+    @GetMapping("/messages/{id}")
+    public List<Contact> showMessageUser(@PathVariable Integer id){
+        return contactService.showMessageUser(id);
     }
 }

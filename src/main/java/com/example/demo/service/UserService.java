@@ -39,8 +39,7 @@ public class UserService {
      * @throws java.util.NoSuchElementException Si aucun utilisateur avec cet identifiant n'est trouvé.
      */
     public User findUserById(Integer id) {
-        Optional<User> user = userRepository.findById(id);
-        return user.get();
+        return userRepository.findById(id).orElseThrow();
     }
 
     public List<User> getAllUsers() {
@@ -59,6 +58,7 @@ public class UserService {
     }
 
 
+    @Transactional
     public User updateProfile(Integer userId, User user) {
         User existingUser = findUserById(userId);
         existingUser.setEmail(user.getEmail());
