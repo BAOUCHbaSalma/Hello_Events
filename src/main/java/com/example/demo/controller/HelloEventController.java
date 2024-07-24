@@ -3,12 +3,17 @@ package com.example.demo.controller;
 import com.example.demo.config.JwtHelper;
 import com.example.demo.dto.Login;
 import com.example.demo.dto.SignupRequest;
+import com.example.demo.model.Contact;
+import com.example.demo.model.Evenement;
+import com.example.demo.model.Reservation;
 import com.example.demo.model.User;
+import com.example.demo.service.ContactService;
+import com.example.demo.service.EvenementService;
+import com.example.demo.service.ReservationService;
 import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,24 +24,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/auth")
-public class AuthController {
+public class HelloEventController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private EvenementService evenementService;
+    @Autowired
+    private ReservationService reservationService;
+    @Autowired
+    private ContactService contactService;
 
 
 
     private final UserService userService;
 
-    public AuthController(UserService userService) {
+    public HelloEventController(UserService userService) {
         this.userService = userService;
-    }
-
-    @GetMapping("/all")
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.getAllUsers();
-        return ResponseEntity.ok(users);
     }
 
     @PostMapping("/signup")
@@ -59,15 +63,57 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid login credentials");
         }
     }
+    @PostMapping("/evenement")
+    public Evenement addEvenement(@RequestBody Evenement evenement){
+        return evenementService.addEvenement(evenement);
+    }
+    @GetMapping("/evenements")
+    public List<Evenement> showEvenements(){
+        return evenementService.showEvents();
+    }
+    @DeleteMapping("/evenement/{id}")
+    public void deleteEvent(@PathVariable Integer id){
+        evenementService.deleteEvent(id);
+    }
+    @GetMapping("/evenement/{idEvent}")
+    public Evenement showEvenement(@PathVariable Integer idEvent){
+        return evenementService.showEvent(idEvent);
+    }
+    @PutMapping("/evenement/update/{idEvenement}")
+    public Evenement updateEvenement(@PathVariable Integer idEvenement,@RequestBody Evenement evenement){
+        return evenementService.updateEvent(idEvenement,evenement);
 
+    }
+    @GetMapping("/reservation")
+    public List<Reservation> showReservations(){
+        return reservationService.showReservations();
+    }
+    @GetMapping("/registres")
+    public List<User> showRegisters(){
+        return userService.findAllRegistre();
+    }
+    @DeleteMapping("/user/{idUser}")
+    public void deleteUser(@PathVariable Integer idUser){
+        userService.deleteUser(idUser);
+    }
+
+    @GetMapping("/contacts")
+    public List<Contact> showAllMessages(){
+        return contactService.showAllMessages();
+    }
+
+    @PostMapping("/contact")
+    public Contact sendMessage(@RequestBody Contact contact){
+        return contactService.sendMessage(contact);
+    }
     @GetMapping("/profile/{id}")
-    public ResponseEntity<User> getUserProfile(@PathVariable Long id) {
+    public ResponseEntity<User> getUserProfile(@PathVariable Integer id) {
         User user = userService.findUserById(id);
         return ResponseEntity.ok(user);
     }
 
     @PutMapping("/profile/{id}")
-    public ResponseEntity<User> updateUserProfile(@PathVariable Long id, @Valid @RequestBody User user) {
+    public ResponseEntity<User> updateUserProfile(@PathVariable Integer id, @Valid @RequestBody User user) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String currentUsername = authentication.getName();
         User currentUser = userService.findUserByUsername(currentUsername);
@@ -75,7 +121,6 @@ public class AuthController {
         if (!currentUser.getUserId().equals(id)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
-
         User updatedUser = userService.updateProfile(id, user);
         return ResponseEntity.ok(updatedUser);
     }

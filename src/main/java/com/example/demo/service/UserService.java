@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.dto.SignupRequest;
+import com.example.demo.model.Contact;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -27,7 +28,17 @@ public class UserService {
         this.authenticationManager = authenticationManager;
     }
 
-    public User findUserById(Long id) {
+
+
+
+    /**
+     * Recherche un utilisateur par son identifiant.
+     *
+     * @param id L'identifiant de l'utilisateur à rechercher.
+     * @return L'utilisateur trouvé.
+     * @throws java.util.NoSuchElementException Si aucun utilisateur avec cet identifiant n'est trouvé.
+     */
+    public User findUserById(Integer id) {
         Optional<User> user = userRepository.findById(id);
         return user.get();
     }
@@ -47,7 +58,8 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public User updateProfile(Long userId, User user) {
+
+    public User updateProfile(Integer userId, User user) {
         User existingUser = findUserById(userId);
         existingUser.setEmail(user.getEmail());
         existingUser.setAge(user.getAge());
@@ -57,4 +69,13 @@ public class UserService {
     public User findUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
+    public List<User> findAllRegistre(){
+       return userRepository.findAll();
+    }
+    public void deleteUser(Integer idUser){
+        userRepository.deleteById(idUser);
+    }
+
+
 }
