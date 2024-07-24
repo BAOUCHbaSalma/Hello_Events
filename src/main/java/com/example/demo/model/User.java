@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,6 +30,8 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private String password;
+    @Enumerated(EnumType.STRING)
+    private Erole role ;
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
@@ -35,8 +39,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private  List<Contact> contactList;
-
-
+//    @OneToMany(mappedBy = "user")
+//    @JsonIgnore
+//    private List<Role> roles;
     private String age;
     @Override
     public String getPassword() {
@@ -49,8 +54,16 @@ public class User implements UserDetails {
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        if (role == null) {
+            // Handle the null case, possibly log an error or throw an exception
+            System.out.println("Role is not initialized.");
+            return List.of(); // or return an empty list or default role as needed
+        }
+
+        // Proceed if role is not null
+        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
     }
+
 
     @Override
     public boolean isAccountNonExpired() {

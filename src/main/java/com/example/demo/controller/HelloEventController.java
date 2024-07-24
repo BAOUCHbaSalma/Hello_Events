@@ -1,23 +1,16 @@
 package com.example.demo.controller;
 
 import com.example.demo.config.JwtAuth;
-import com.example.demo.model.Contact;
-import com.example.demo.model.Evenement;
-import com.example.demo.model.Reservation;
-import com.example.demo.model.User;
-import com.example.demo.service.ContactService;
-import com.example.demo.service.EvenementService;
-import com.example.demo.service.ReservationService;
-import com.example.demo.service.UserService;
+import com.example.demo.model.*;
+import com.example.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 public class HelloEventController {
@@ -33,6 +26,7 @@ public class HelloEventController {
 
 
 
+
     private final UserService userService;
 
     public HelloEventController(UserService userService) {
@@ -40,31 +34,33 @@ public class HelloEventController {
     }
 
     @PostMapping("/signup")
-    public User signup(@RequestBody User user) {
-        return userService.signUp(user);
+    public void signup(@RequestBody User user) {
+         userService.signUp(user);
 
     }
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody User user) {
-        System.out.println("///////////////////"+user.getPassword()+"//////////////"+user.getUsername());
+        User user2=userService.findByUsername(user.getUsername());
+        System.out.println("///////////////////"+user.getPassword()+"//////////////"+user.getUsername()+"/:////////////"+user2.getRole());
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
         );
-        String token = JwtAuth.generateToken(user.getUsername());
+        Erole role=user2.getRole();
+        String token = JwtAuth.generateToken(user.getUsername(),role);
         Map<String, String> response = new HashMap<>();
         response.put("token", token);
         return ResponseEntity.ok(response);
 
     }
-    @PostMapping("/evenement")
+    @PostMapping("admin/evenement")
     public Evenement addEvenement(@RequestBody Evenement evenement){
         return evenementService.addEvenement(evenement);
     }
-    @GetMapping("/evenements")
+    @GetMapping("admin/evenements")
     public List<Evenement> showEvenements(){
         return evenementService.showEvents();
     }
-    @DeleteMapping("/evenement/{id}")
+    @DeleteMapping("admin/evenement/{id}")
     public void deleteEvent(@PathVariable Integer id){
         evenementService.deleteEvent(id);
     }
@@ -77,7 +73,7 @@ public class HelloEventController {
         return evenementService.updateEvent(idEvenement,evenement);
 
     }
-    @GetMapping("/reservation")
+    @GetMapping("user/reservation")
     public List<Reservation> showReservations(){
         return reservationService.showReservations();
     }
@@ -113,7 +109,7 @@ public class HelloEventController {
     public List<Contact> showMessageUser(@PathVariable Integer id){
         return contactService.showMessageUser(id);
     }
-    @PostMapping ("/reservation")
+    @PostMapping ("user/reservation")
     public Reservation addReservation(@RequestBody Reservation reservation){
         return reservationService.addReservation(reservation);
     }

@@ -1,5 +1,6 @@
 package com.example.demo.implimentation;
 
+import com.example.demo.model.Erole;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user =userRepository.findByUsername(username);
         System.out.println(user.getUsername()+"///:::22IMPL/"+user.getPassword());
-        return user.builder().username(user.getUsername()).password(user.getPassword()).build();
+        return user.builder().username(user.getUsername()).password(user.getPassword()).role(user.getRole()).build();
     }
 }
 
