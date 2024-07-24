@@ -6,9 +6,11 @@ import com.example.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,16 +27,13 @@ public class UserService {
         this.authenticationManager = authenticationManager;
     }
 
-    /**
-     * Recherche un utilisateur par son identifiant.
-     *
-     * @param id L'identifiant de l'utilisateur à rechercher.
-     * @return L'utilisateur trouvé.
-     * @throws java.util.NoSuchElementException Si aucun utilisateur avec cet identifiant n'est trouvé.
-     */
     public User findUserById(Long id) {
         Optional<User> user = userRepository.findById(id);
         return user.get();
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
     @Transactional
@@ -46,5 +45,16 @@ public class UserService {
                 .email(signupRequest.email())
                 .build();
         userRepository.save(user);
+    }
+
+    public User updateProfile(Long userId, User user) {
+        User existingUser = findUserById(userId);
+        existingUser.setEmail(user.getEmail());
+        existingUser.setAge(user.getAge());
+        return userRepository.save(existingUser);
+    }
+
+    public User findUserByUsername(String username) {
+        return userRepository.findByUsername(username);
     }
 }

@@ -37,9 +37,8 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(expressionInterceptUrlRegistry ->
                         expressionInterceptUrlRegistry
-                                .requestMatchers("/api/auth/signup").permitAll()
-                                .requestMatchers("/api/auth/login").permitAll()
-                                .anyRequest().authenticated()
+
+                                .anyRequest().permitAll()
                 )
 
                 .formLogin(AbstractHttpConfigurer::disable);

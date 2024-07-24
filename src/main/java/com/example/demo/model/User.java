@@ -1,13 +1,11 @@
 package com.example.demo.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -28,8 +26,8 @@ public class User implements UserDetails {
 
     @Column(nullable = false)
     private String password;
-    
 
+    private String age;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
