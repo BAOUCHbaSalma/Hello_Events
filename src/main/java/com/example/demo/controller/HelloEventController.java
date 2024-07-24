@@ -1,8 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.config.JwtHelper;
-import com.example.demo.dto.Login;
-import com.example.demo.dto.SignupRequest;
+import com.example.demo.config.JwtAuth;
 import com.example.demo.model.Contact;
 import com.example.demo.model.Evenement;
 import com.example.demo.model.Reservation;
@@ -11,17 +9,15 @@ import com.example.demo.service.ContactService;
 import com.example.demo.service.EvenementService;
 import com.example.demo.service.ReservationService;
 import com.example.demo.service.UserService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class HelloEventController {
@@ -44,24 +40,21 @@ public class HelloEventController {
     }
 
     @PostMapping("/signup")
-    public ResponseEntity<Void> signup(@Valid @RequestBody SignupRequest requestDto) {
-        userService.signUp(requestDto);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public User signup(@RequestBody User user) {
+        return userService.signUp(user);
+
     }
-
     @PostMapping("/login")
-    public ResponseEntity<?> login(@Valid @RequestBody Login loginRequest) {
-        System.out.println("/////////////////");
-        System.out.println("////////////"+loginRequest.password()+"//////////"+loginRequest.username());
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.username(), loginRequest.password()));
+    public ResponseEntity<?> login(@RequestBody User user) {
+        System.out.println("///////////////////"+user.getPassword()+"//////////////"+user.getUsername());
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
+        );
+        String token = JwtAuth.generateToken(user.getUsername());
+        Map<String, String> response = new HashMap<>();
+        response.put("token", token);
+        return ResponseEntity.ok(response);
 
-        if (authentication.isAuthenticated()) {
-            String token = JwtHelper.generateToken(loginRequest.username());
-            return ResponseEntity.ok(token);
-        } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid login credentials");
-        }
     }
     @PostMapping("/evenement")
     public Evenement addEvenement(@RequestBody Evenement evenement){
@@ -113,7 +106,7 @@ public class HelloEventController {
     }
 
     @PutMapping("/profile/{id}")
-    public User updateUserProfile(@PathVariable Integer id, @Valid @RequestBody User user) {
+    public User updateUserProfile(@PathVariable Integer id,@RequestBody User user) {
         return userService.updateProfile(id,user);
     }
     @GetMapping("/messages/{id}")

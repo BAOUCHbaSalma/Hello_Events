@@ -1,73 +1,43 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.SignupRequest;
-import com.example.demo.model.Contact;
 import com.example.demo.model.User;
 import com.example.demo.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final AuthenticationManager authenticationManager;
 
-    @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
     }
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
 
-
-    /**
-     * Recherche un utilisateur par son identifiant.
-     *
-     * @param id L'identifiant de l'utilisateur à rechercher.
-     * @return L'utilisateur trouvé.
-     * @throws java.util.NoSuchElementException Si aucun utilisateur avec cet identifiant n'est trouvé.
-     */
     public User findUserById(Integer id) {
         return userRepository.findById(id).orElseThrow();
     }
 
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public User signUp(User user) {
+        String hashedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(hashedPassword);
+        return userRepository.save(user);
     }
 
-    @Transactional
-    public void signUp(SignupRequest signupRequest) {
-        String hashedPassword = passwordEncoder.encode(signupRequest.password());
-        User user = User.builder()
-                .username(signupRequest.username())
-                .password(hashedPassword)
-                .email(signupRequest.email())
-                .build();
-        userRepository.save(user);
-    }
-
-
-    @Transactional
     public User updateProfile(Integer userId, User user) {
         User existingUser = findUserById(userId);
         existingUser.setEmail(user.getEmail());
         existingUser.setAge(user.getAge());
         return userRepository.save(existingUser);
-    }
-
-    public User findUserByUsername(String username) {
-        return userRepository.findByUsername(username);
     }
 
     public List<User> findAllRegistre(){
