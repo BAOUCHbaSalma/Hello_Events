@@ -120,4 +120,8 @@ public class HelloEventController {
     public List<Contact> showMessageUser(@PathVariable Integer id){
         return contactService.showMessageUser(id);
     }
+    @PostMapping ("/reservation")
+    public Reservation addReservation(@RequestBody Reservation reservation){
+        return reservationService.addReservation(reservation);
+    }
 }
