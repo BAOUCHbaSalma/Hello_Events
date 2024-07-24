@@ -1,5 +1,6 @@
 package com.example.demo.config;
 import com.example.demo.implimentation.UserDetailsServiceImpl;
+import com.example.demo.model.Erole;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -36,13 +37,14 @@ public class SecurityConfig  {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(expressionInterceptUrlRegistry ->
                         expressionInterceptUrlRegistry
-
                                 .requestMatchers("/signup").permitAll()
                                 .requestMatchers("/login").permitAll() // Permettre l'accès à l'endpoint /login
+                                .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/user/**").hasRole("USER")
                                 .anyRequest().authenticated()
                 )
                 .formLogin(formLogin ->formLogin.disable());// Désactiver le formulaire de login par défaut de Spring Security
-        http.addFilterBefore(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new JwtAuthorizationFilter((userDetailsService)), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 
