@@ -135,8 +135,8 @@ public class HelloEventController {
 //        return evenementService.findByDateEvenement(dateEvenement);
 //    }
 
-    @GetMapping("/searchevents")
-    public List<Evenement> findEvents(@RequestParam LocalDate date ,@RequestParam String categorie,@RequestParam String lieu){
+    @GetMapping("user/searchevents")
+    public List<Evenement> findEvents(@RequestParam(required = false) LocalDate date ,@RequestParam(required = false) String categorie,@RequestParam(required = false) String lieu){
         return evenementService.findEvents(date,categorie,lieu);
     }
 
