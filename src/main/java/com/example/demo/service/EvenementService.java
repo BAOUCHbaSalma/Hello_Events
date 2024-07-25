@@ -5,6 +5,8 @@ import com.example.demo.repository.EvenementRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -37,4 +39,31 @@ public class EvenementService {
         evenement1.setPrix(evenement.getPrix());
        return evenementRepository.save(evenement1);
     }
+
+//    public List<Evenement> searchEvents(String titre, String lieu, LocalDate dateEvenement, LocalTime heursEvenement) {
+//        if (titre != null && lieu != null && dateEvenement != null && heursEvenement != null) {
+//            return evenementRepository.findByTitreContainingIgnoreCaseAndLieuContainingIgnoreCaseAndDateEvenementAAndHeursEvenement(
+//                    titre, lieu, dateEvenement, heursEvenement);
+//        }
+//        if (titre != null && lieu != null && dateEvenement != null) {
+//            return evenementRepository.findByTitreContainingIgnoreCaseAndLieuContainingIgnoreCaseAndDateEvenementAAndHeursEvenement(
+//                    titre, lieu, dateEvenement, heursEvenement);
+//        }
+//        // Add more conditions as needed based on combinations of parameters
+//        return evenementRepository.findAll(); // Default to returning all events if no parameters are provided
+//    }
+//    public List<Evenement> findEventByTitre(String titre){
+//        return evenementRepository.findByTitre(titre);
+//    }
+//    public List<Evenement> findEventByLieu(String lieu){
+//        return evenementRepository.findByLieu(lieu);
+//    }
+//
+//    public List<Evenement> findByDateEvenement(LocalDate dateEvenement){
+//        return evenementRepository.findByDateEvenement(dateEvenement);
+//    }
+
+     public List<Evenement> findEvents(LocalDate date,String categorie,String lieu){
+        return evenementRepository.findAllByDateEvenementOrCategorieOrLieu(date,categorie,lieu);
+     }
 }
