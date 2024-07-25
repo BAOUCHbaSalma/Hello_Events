@@ -26,6 +26,9 @@ public class UserService {
     public User findUserById(Integer id) {
         return userRepository.findById(id).orElseThrow();
     }
+    public User findByUsername(String username){
+        return userRepository.findByUsername(username);
+    }
 
     public User signUp(User user) {
         String hashedPassword = passwordEncoder.encode(user.getPassword());
