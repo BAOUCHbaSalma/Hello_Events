@@ -52,7 +52,18 @@ public class EvenementService {
 //        // Add more conditions as needed based on combinations of parameters
 //        return evenementRepository.findAll(); // Default to returning all events if no parameters are provided
 //    }
-    public List<Evenement> findEventByTitre(String titre){
-        return evenementRepository.findByTitre(titre);
-    }
+//    public List<Evenement> findEventByTitre(String titre){
+//        return evenementRepository.findByTitre(titre);
+//    }
+//    public List<Evenement> findEventByLieu(String lieu){
+//        return evenementRepository.findByLieu(lieu);
+//    }
+//
+//    public List<Evenement> findByDateEvenement(LocalDate dateEvenement){
+//        return evenementRepository.findByDateEvenement(dateEvenement);
+//    }
+
+     public List<Evenement> findEvents(LocalDate date,String categorie,String lieu){
+        return evenementRepository.findAllByDateEvenementOrCategorieOrLieu(date,categorie,lieu);
+     }
 }

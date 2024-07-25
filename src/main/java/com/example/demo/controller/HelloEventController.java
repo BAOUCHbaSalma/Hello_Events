@@ -15,6 +15,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -121,9 +122,23 @@ public class HelloEventController {
     public List<Reservation> showReservationsByIdUser(@PathVariable Integer id){
         return reservationService.showReservationsByIdUser(id);
     }
-    @GetMapping("/titre")
-    public List<Evenement> findEventByTitre(String titre){
-        return evenementService.findEventByTitre(titre);
+//    @GetMapping("/titre")
+//    public List<Evenement> findEventByTitre(String titre){
+//        return evenementService.findEventByTitre(titre);
+//    }
+//    @GetMapping("/lieu")
+//    public List<Evenement> findEventByLieu(String lieu){
+//        return evenementService.findEventByLieu(lieu);
+//    }
+//    @GetMapping("/date")
+//    public List<Evenement> findByDateEvenement(LocalDate dateEvenement){
+//        return evenementService.findByDateEvenement(dateEvenement);
+//    }
+
+    @GetMapping("/searchevents")
+    public List<Evenement> findEvents(@RequestParam LocalDate date ,@RequestParam String categorie,@RequestParam String lieu){
+        return evenementService.findEvents(date,categorie,lieu);
     }
+
 
 }

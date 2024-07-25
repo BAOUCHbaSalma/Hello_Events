@@ -9,14 +9,15 @@ import java.util.List;
 
 public interface EvenementRepository extends JpaRepository<Evenement, Integer> {
 
-    List<Evenement> findByTitre(String titre);
+    List<Evenement> findAllByDateEvenementOrCategorieOrLieu(LocalDate date,String categorie,String lieu);
 
-    List<Evenement> findByLieu(String lieu);
-
-    List<Evenement> findByDateEvenement(LocalDate dateEvenement);
-
-
-    List<Evenement> findByHeursEvenement(LocalTime heursEvenement);
+//    List<Evenement> findByTitre(String titre);
+//
+//    List<Evenement> findByLieu(String lieu);
+//
+//    List<Evenement> findByDateEvenement(LocalDate dateEvenement);
+//
+//    List<Evenement> findByHeursEvenement(LocalTime heursEvenement);
 
 //    List<Evenement> findByTitreContainingIgnoreCaseAndLieuContainingIgnoreCaseAndDateEvenementAAndHeursEvenement(
 //            String titre, String lieu, LocalDate dateEvenement, LocalTime heursEvenement);
