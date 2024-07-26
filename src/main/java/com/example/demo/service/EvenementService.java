@@ -37,6 +37,7 @@ public class EvenementService {
         evenement1.setHeursEvenement(evenement.getHeursEvenement());
         evenement1.setTitre(evenement.getTitre());
         evenement1.setPrix(evenement.getPrix());
+        evenement1.setCategorie(evenement.getCategorie());
        return evenementRepository.save(evenement1);
     }
 
@@ -66,4 +67,11 @@ public class EvenementService {
      public List<Evenement> findEvents(LocalDate date,String categorie,String lieu){
         return evenementRepository.findAllByDateEvenementOrCategorieOrLieu(date,categorie,lieu);
      }
+//     public List<Evenement> findEventsByIduser(Integer idUser){
+//        return evenementRepository.findByUser_UserId(idUser);
+//     }
+//     public List<Evenement> findEventsReserver(Integer idUser){
+//        return evenementRepository.findEvenementReservee(idUser);
+//
+//     }
 }

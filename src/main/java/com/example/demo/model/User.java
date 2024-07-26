@@ -39,10 +39,9 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private  List<Contact> contactList;
-//    @OneToMany(mappedBy = "user")
-//    @JsonIgnore
-//    private List<Role> roles;
     private String age;
+//    @OneToMany
+//    private List<Evenement> evenementList;
     @Override
     public String getPassword() {
         return this.password;
