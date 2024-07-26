@@ -32,6 +32,7 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Erole role ;
+    private Integer age;
 
     @OneToMany(mappedBy = "user")
     @JsonIgnore
@@ -39,8 +40,15 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private  List<Contact> contactList;
-    private String age;
-//    @OneToMany
+
+    public User(String username, String email, String password, Integer age) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.age = age;
+    }
+
+    //    @OneToMany
 //    private List<Evenement> evenementList;
     @Override
     public String getPassword() {
