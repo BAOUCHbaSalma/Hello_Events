@@ -55,8 +55,8 @@ public class HelloEventController {
         Map<String, String> response = new HashMap<>();
         response.put("token", token);
         return ResponseEntity.ok(response);
-
     }
+
     @PostMapping("admin/evenement")
     public Evenement addEvenement(@RequestBody Evenement evenement){
         return evenementService.addEvenement(evenement);
@@ -122,23 +122,10 @@ public class HelloEventController {
     public List<Reservation> showReservationsByIdUser(@PathVariable Integer id){
         return reservationService.showReservationsByIdUser(id);
     }
-//    @GetMapping("/titre")
-//    public List<Evenement> findEventByTitre(String titre){
-//        return evenementService.findEventByTitre(titre);
-//    }
-//    @GetMapping("/lieu")
-//    public List<Evenement> findEventByLieu(String lieu){
-//        return evenementService.findEventByLieu(lieu);
-//    }
-//    @GetMapping("/date")
-//    public List<Evenement> findByDateEvenement(LocalDate dateEvenement){
-//        return evenementService.findByDateEvenement(dateEvenement);
-//    }
+
 
     @GetMapping("user/searchevents")
     public List<Evenement> findEvents(@RequestParam(required = false) LocalDate date ,@RequestParam(required = false) String categorie,@RequestParam(required = false) String lieu){
         return evenementService.findEvents(date,categorie,lieu);
     }
-
-
 }

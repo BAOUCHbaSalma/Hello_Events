@@ -38,12 +38,12 @@ public class SecurityConfig  {
                 .authorizeHttpRequests(expressionInterceptUrlRegistry ->
                         expressionInterceptUrlRegistry
                                 .requestMatchers("/signup").permitAll()
-                                .requestMatchers("/login").permitAll() // Permettre l'accès à l'endpoint /login
+                                .requestMatchers("/login").permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/user/**").hasRole("USER")
                                 .anyRequest().authenticated()
                 )
-                .formLogin(formLogin ->formLogin.disable());// Désactiver le formulaire de login par défaut de Spring Security
+                .formLogin(formLogin ->formLogin.disable());
         http.addFilterBefore(new JwtAuthorizationFilter((userDetailsService)), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
