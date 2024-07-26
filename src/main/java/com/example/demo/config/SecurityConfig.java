@@ -37,8 +37,10 @@ public class SecurityConfig  {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(expressionInterceptUrlRegistry ->
                         expressionInterceptUrlRegistry
-                                .requestMatchers("/signup").permitAll()
-                                .requestMatchers("/login").permitAll()
+
+                                .requestMatchers("user/signup").permitAll()
+                                .requestMatchers("/login").permitAll() // Permettre l'accès à l'endpoint /login
+
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
                                 .requestMatchers("/user/**").hasRole("USER")
                                 .anyRequest().authenticated()

@@ -38,8 +38,9 @@ public class HelloEventController {
         this.userService = userService;
     }
 
-    @PostMapping("/signup")
+    @PostMapping("user/signup")
     public void signup(@RequestBody User user) {
+        user.setRole(Erole.USER);
          userService.signUp(user);
 
     }
@@ -61,7 +62,7 @@ public class HelloEventController {
     public Evenement addEvenement(@RequestBody Evenement evenement){
         return evenementService.addEvenement(evenement);
     }
-    @GetMapping("admin/evenements")
+    @GetMapping("/evenements")
     public List<Evenement> showEvenements(){
         return evenementService.showEvents();
     }
@@ -73,25 +74,25 @@ public class HelloEventController {
     public Evenement showEvenement(@PathVariable Integer idEvent){
         return evenementService.showEvent(idEvent);
     }
-    @PutMapping("/evenement/update/{idEvenement}")
+    @PutMapping("admin/evenement/update/{idEvenement}")
     public Evenement updateEvenement(@PathVariable Integer idEvenement,@RequestBody Evenement evenement){
         return evenementService.updateEvent(idEvenement,evenement);
 
     }
-    @GetMapping("user/reservation")
+    @GetMapping("admin/reservation")
     public List<Reservation> showReservations(){
         return reservationService.showReservations();
     }
-    @GetMapping("/registres")
+    @GetMapping("admin/registres")
     public List<User> showRegisters(){
         return userService.findAllRegistre();
     }
-    @DeleteMapping("/user/{idUser}")
+    @DeleteMapping("admin/{idUser}")
     public void deleteUser(@PathVariable Integer idUser){
         userService.deleteUser(idUser);
     }
 
-    @GetMapping("/contacts")
+    @GetMapping("admin/contacts")
     public List<Contact> showAllMessages(){
         return contactService.showAllMessages();
     }
@@ -106,7 +107,7 @@ public class HelloEventController {
         return ResponseEntity.ok(user);
     }
 
-    @PutMapping("/profile/{id}")
+    @PutMapping("user/profile/{id}")
     public User updateUserProfile(@PathVariable Integer id,@RequestBody User user) {
         return userService.updateProfile(id,user);
     }
@@ -124,8 +125,24 @@ public class HelloEventController {
     }
 
 
+
     @GetMapping("user/searchevents")
     public List<Evenement> findEvents(@RequestParam(required = false) LocalDate date ,@RequestParam(required = false) String categorie,@RequestParam(required = false) String lieu){
         return evenementService.findEvents(date,categorie,lieu);
     }
+
+//    @GetMapping("user/searchevents")
+//    public List<Evenement> findEvents(@RequestParam(required = false) LocalDate date ,@RequestParam(required = false) String categorie,@RequestParam(required = false) String lieu){
+//        return evenementService.findEvents(date,categorie,lieu);
+//    }
+//        @GetMapping("/admin/cevents")
+//            public List<Evenement> findEventsById() {
+//            return evenementService.findEventsByIduser(11);
+//        }
+//        @GetMapping("/user/showeventsr/{id}")
+//    public List<Evenement> findeventsReserver(@PathVariable Integer id){
+//        return evenementService.findEventsReserver(id);
+//        }
+
+
 }
