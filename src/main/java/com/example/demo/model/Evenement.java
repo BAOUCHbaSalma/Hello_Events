@@ -35,9 +35,12 @@ public class Evenement {
     private String categorie;
     @Column
     private LocalTime heursEvenement;
+
     @Column
     private String image;
     @OneToMany(mappedBy = "evenement")
     @JsonIgnore
     private List<Reservation> reservationList;
+//    @ManyToOne
+//    private User user;
 }
