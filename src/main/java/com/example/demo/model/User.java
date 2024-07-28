@@ -47,6 +47,13 @@ public class User implements UserDetails {
         this.password = password;
         this.age = age;
     }
+    public User(String username, String email, String password, Integer age,Erole role) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.age = age;
+        this.role=role;
+    }
 
     //    @OneToMany
 //    private List<Evenement> evenementList;
