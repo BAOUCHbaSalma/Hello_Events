@@ -1,12 +1,17 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Evenement;
+
+
+import com.example.demo.model.QEvenement;
 import com.example.demo.repository.EvenementRepository;
+
+import com.querydsl.core.BooleanBuilder;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -64,14 +69,38 @@ public class EvenementService {
 //        return evenementRepository.findByDateEvenement(dateEvenement);
 //    }
 
-     public List<Evenement> findEvents(LocalDate date,String categorie,String lieu){
-        return evenementRepository.findAllByDateEvenementOrCategorieOrLieu(date,categorie,lieu);
-     }
+//     public List<Evenement> findEvents(LocalDate date,String categorie,String lieu){
+//        return evenementRepository.findAllByDateEvenementOrCategorieOrLieu(date,categorie,lieu);
+//     }
 //     public List<Evenement> findEventsByIduser(Integer idUser){
 //        return evenementRepository.findByUser_UserId(idUser);
 //     }
 //     public List<Evenement> findEventsReserver(Integer idUser){
 //        return evenementRepository.findEvenementReservee(idUser);
 //
-//     }
+ //    }
+    public List<Evenement> findEvents(LocalDate date, String categorie, String lieu) {
+        BooleanBuilder predicate = buildPredicate(date, categorie, lieu);
+        return (List<Evenement>) evenementRepository.findAll(predicate);
+    }
+
+        private BooleanBuilder buildPredicate(LocalDate date, String categorie, String lieu) {
+            QEvenement evenement = QEvenement.evenement;
+            BooleanBuilder builder = new BooleanBuilder();
+
+            if (date != null) {
+                builder.and(evenement.dateEvenement.eq(date));
+            }
+
+            if (categorie != null) {
+                builder.and(evenement.categorie.containsIgnoreCase(categorie));
+            }
+
+            if (lieu != null) {
+                builder.and(evenement.lieu.containsIgnoreCase(lieu));
+            }
+
+            return builder;
+        }
+
 }

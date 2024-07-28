@@ -125,12 +125,6 @@ public class HelloEventController {
     }
 
 
-
-    @GetMapping("user/searchevents")
-    public List<Evenement> findEvents(@RequestParam(required = false) LocalDate date ,@RequestParam(required = false) String categorie,@RequestParam(required = false) String lieu){
-        return evenementService.findEvents(date,categorie,lieu);
-    }
-
 //    @GetMapping("user/searchevents")
 //    public List<Evenement> findEvents(@RequestParam(required = false) LocalDate date ,@RequestParam(required = false) String categorie,@RequestParam(required = false) String lieu){
 //        return evenementService.findEvents(date,categorie,lieu);
@@ -143,6 +137,11 @@ public class HelloEventController {
 //    public List<Evenement> findeventsReserver(@PathVariable Integer id){
 //        return evenementService.findEventsReserver(id);
 //        }
+
+    @GetMapping("user/searchevents")
+    public List<Evenement> findEvents(@RequestParam(required = false) LocalDate date ,@RequestParam(required = false) String categorie,@RequestParam(required = false) String lieu){
+        return evenementService.findEvents(date,categorie,lieu);
+    }
 
 
 }

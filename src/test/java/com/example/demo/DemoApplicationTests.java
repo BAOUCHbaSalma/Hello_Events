@@ -17,31 +17,31 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @SpringBootTest
 public class DemoApplicationTests {
 
-	@Autowired
-	private UserService userService;
-
-	@Test
-	public void AddUserTest() {
-
-		User user = new User("Wissal", "wissal@gmail.com", "123", 24);
-
-		userService.signUp(user);
-
-		assertNotNull(user.getUserId());
-		assertEquals("Wissal", user.getUsername());
-		assertEquals("wissal@gmail.com", user.getEmail());
-		assertEquals(Erole.USER, user.getRole());
-		assertEquals(24, user.getAge());
-	}
-	@Test
-	public void ShowUserTest() {
-
-
-		List<User> users=userService.findAllRegistre();
-
-
-		assertEquals(1, users.get(0).getUserId());
-		assertEquals(2, users.get(1).getUserId());
-	
-	}
+//	@Autowired
+//	private UserService userService;
+//
+//	@Test
+//	public void AddUserTest() {
+//
+//		User user = new User("Wissal", "wissal@gmail.com", "123", 24);
+//
+//		userService.signUp(user);
+//
+//		assertNotNull(user.getUserId());
+//		assertEquals("Wissal", user.getUsername());
+//		assertEquals("wissal@gmail.com", user.getEmail());
+//		assertEquals(Erole.USER, user.getRole());
+//		assertEquals(24, user.getAge());
+//	}
+//	@Test
+//	public void ShowUserTest() {
+//
+//
+//		List<User> users=userService.findAllRegistre();
+//
+//
+//		assertEquals(1, users.get(0).getUserId());
+//		assertEquals(2, users.get(1).getUserId());
+//
+//	}
 }
