@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+@CrossOrigin("*")
 @RestController
 public class HelloEventController {
 
@@ -117,6 +117,7 @@ public class HelloEventController {
     }
     @PostMapping ("user/reservation")
     public Reservation addReservation(@RequestBody Reservation reservation){
+        System.out.println("controller"+reservation.getHeursReservation());
         return reservationService.addReservation(reservation);
     }
     @GetMapping ("/reservations/{id}")
@@ -142,6 +143,11 @@ public class HelloEventController {
     public List<Evenement> findEvents(@RequestParam(required = false) LocalDate date ,@RequestParam(required = false) String categorie,@RequestParam(required = false) String lieu){
         return evenementService.findEvents(date,categorie,lieu);
     }
+    @GetMapping("findi")
+    public Integer findId(@RequestParam String username){
+        return userService.findIdUserByUsername(username);
+    }
+
 
 
 }
